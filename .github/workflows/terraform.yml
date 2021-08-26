@@ -1,25 +1,35 @@
-name: Terraform GA
+name: Terraform Apply
 
-on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
-    
+on: [workflow_dispatch]
+
+defaults:
+  run:
+    working-directory: .
+
 jobs:
   terraform:
-    name: "Terraform Init"
     runs-on: ubuntu-latest
+
+    env:
+      ARM_CLIENT_ID: ${{secrets.ARM_CLIENT_ID}}
+      ARM_CLIENT_SECRET: ${{secrets.ARM_CLIENT_SECRET}}
+      ARM_SUBSCRIPTION_ID: ${{secrets.ARM_SUBSCRIPTION_ID}}
+      ARM_TENANT_ID: ${{secrets.ARM_TENANT_ID}}
 
     steps:
       - uses: actions/checkout@v2
-      
-      - name: Terraform Init
-        uses: hashicorp/terraform-github-actions@master #hashicorp/setup-terraform@v1.2.1
-        with:
-          tf_actions_version: 0.12.18
-          tf_actions_subcommand: "init"
-        env:
-          GITHUB_TOKEN: ${{  secrets.GITHUB_TOKEN  }}
-        
 
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+
+      - name: Terraform Init
+        run: terraform init
+        
+      - name: Terraform Validate
+        run: terraform validate
+
+      - name: Terraform Plan
+        run: terraform plan
+        
+      - name: Terraform Apply
+        run: terraform apply --auto-approve
