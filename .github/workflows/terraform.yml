@@ -1,0 +1,25 @@
+name: Terraform GA
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+    
+jobs:
+  terraform:
+    name: "Terraform Init"
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      
+      - name: Terraform Init
+        uses: hashicorp/terraform-github-actions@master #hashicorp/setup-terraform@v1.2.1
+        with:
+          tf_actions_version: 0.12.18
+          tf_actions_subcommand: "init"
+        env:
+          GITHUB_TOKEN: ${{  secrets.GITHUB_TOKEN  }}
+        
+
