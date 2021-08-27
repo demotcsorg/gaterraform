@@ -1,5 +1,5 @@
 resource "azurerm_resource_group" "example" {
-  name     = "rgdemo"
+  name     = "rgname"
   location = "eastus"
 }
 
@@ -8,7 +8,7 @@ module "web_app" {
 
   name = "exampleforTF"
 
-  resource_group_name = azurerm_resource_group.example.name
+  resource_group_name = "rgdemo"
 
   runtime = {
     name    = "dotnetcore"
