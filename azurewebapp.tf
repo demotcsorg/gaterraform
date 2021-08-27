@@ -1,17 +1,27 @@
 resource "azurerm_resource_group" "example" {
   name     = "rgname"
-  location = "eastus"
+  location = "West Europe"
 }
 
-module "web_app" {
-  source = "innovationnorway/web-app/azurerm"
+resource "azurerm_app_service_plan" "example" {
+  name                = "example-appserviceplan"
+  location            = azurerm_resource_group.example.location
+  resource_group_name = azurerm_resource_group.example.name
 
-  name = "exampleforTF"
+  sku {
+    tier = "Standard"
+    size = "S1"
+  }
+}
 
-  resource_group_name = "rgdemo"
+resource "azurerm_app_service" "example" {
+  name                = "example-app-service-tf"
+  location            = azurerm_resource_group.example.location
+  resource_group_name = azurerm_resource_group.example.name
+  app_service_plan_id = azurerm_app_service_plan.example.id
 
-  runtime = {
-    name    = "dotnetcore"
-    version = "2.2"
+  site_config {
+    dotnet_framework_version = "v4.0"
+    scm_type                 = "LocalGit"
   }
 }
