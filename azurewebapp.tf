@@ -1,6 +1,6 @@
 resource "azurerm_resource_group" "example" {
-  name     = "rgname"
-  location = "westeurope"
+  name     = "rgdemo"
+  location = "eastus"
 }
 
 module "web_app" {
