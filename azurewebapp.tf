@@ -1,5 +1,5 @@
 resource "azurerm_resource_group" "example" {
-  name     = "rgdemo"
+  name     = "rgname"
   location = "westeurope"
 }
 
