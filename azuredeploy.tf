@@ -15,7 +15,7 @@ terraform {
 
 
 
-resource "azurerm_resource_group" "exampleforTF" {
+resource "azurerm_resource_group" "example" {
   name     = "rgname"
   location = "uksouth"
 }
@@ -23,12 +23,15 @@ resource "azurerm_resource_group" "exampleforTF" {
 module "web_app" {
   source = "innovationnorway/web-app/azurerm"
 
-  name = "exampleforTF"
+  name = "exampleforTFdotnet"
 
-  resource_group_name = azurerm_resource_group.exampleforTF.name
+  resource_group_name = azurerm_resource_group.example.name
 
   runtime = {
     name    = "dotnetcore"
     version = "2.2"
   }
+  
+  plan = {
+    sku_size = "B1"
 }
