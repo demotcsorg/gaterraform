@@ -6,7 +6,7 @@ provider "azurerm" {
 #backend
 terraform {
   backend "azurerm" {
-    resource_group_name  = "rgname"
+    resource_group_name  = "example-resources"
     storage_account_name = "storageaccoutnisarg"
     container_name       = "tfstate"
     key                  = "terraform.tfstate"
@@ -15,7 +15,7 @@ terraform {
 
 
 
-resource "azurerm_resource_group" "example" {
+resource "azurerm_resource_group" "exampleforTF" {
   name     = "rgname"
   location = "uksouth"
 }
@@ -25,7 +25,7 @@ module "web_app" {
 
   name = "exampleforTF"
 
-  resource_group_name = azurerm_resource_group.example.name
+  resource_group_name = azurerm_resource_group.exampleforTF.name
 
   runtime = {
     name    = "dotnetcore"
