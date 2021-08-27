@@ -34,4 +34,5 @@ module "web_app" {
   
   plan = {
     sku_size = "B1"
+  }
 }
